@@ -45,27 +45,27 @@ for iHelm = 1:nHelm
     end
 end
 
-% Record the current position of the center helmet.
+% Record the current position of the central helmet.
 x0 = Traj(trial,cHelm).x(time);
 y0 = Traj(trial,cHelm).y(time);
 
 % Plot subtle lines connecting 'leading' helmets to center helmet.
 for iHelm = 1:nHelm
     % Read in x, y, and heading.
-    x = Traj(trial,iHelm).x(time);
-    y = Traj(trial,iHelm).y(time);
+    x = Traj(trial,iHelm).x(time)-x0;
+    y = Traj(trial,iHelm).y(time)-y0;
     hdn = Traj(trial,iHelm).hdn(time);
     % Draw line.
     if iHelm ~= cHelm && mean(tMax(iHelm,:))/60 < 0
-        plot([x x0],[y y0],'Color',[0.85 1 0.85],'LineWidth',5); hold on;
+        plot([x 0],[y 0],'Color',[0.85 1 0.85],'LineWidth',5); hold on;
     end
 end
 
 % Plot position and heading of all helmets.
 for iHelm = 1:nHelm
     % Read in x, y, and heading.
-    x = Traj(trial,iHelm).x(time);
-    y = Traj(trial,iHelm).y(time);
+    x = Traj(trial,iHelm).x(time)-x0;
+    y = Traj(trial,iHelm).y(time)-y0;
     hdn = Traj(trial,iHelm).hdn(time);
     % Plot center helmet (big and bold).
     if iHelm == cHelm
@@ -103,4 +103,5 @@ end
 set(gca, 'FontName', 'CMU Bright','FontSize',12)
 xlabel('x (m)','FontName','CMU Sans Serif','FontSize',20,'FontWeight','Bold')
 ylabel('y (m)','FontName','CMU Bright','FontSize',20,'FontWeight','Bold')
+print -depsc2 network.eps
 
